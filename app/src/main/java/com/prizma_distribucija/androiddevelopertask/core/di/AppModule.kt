@@ -5,6 +5,11 @@ import com.prizma_distribucija.androiddevelopertask.core.util.Constants
 import com.prizma_distribucija.androiddevelopertask.core.util.DefaultDispatchers
 import com.prizma_distribucija.androiddevelopertask.core.util.DispatcherProvider
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.FeedApiService
+import com.prizma_distribucija.androiddevelopertask.feature_feed.data.repository.ProfileRepositoryImpl
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.ProfileRepository
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.AthleteMapper
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.PlanMapper
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.UserMapper
 import com.prizma_distribucija.androiddevelopertask.feature_login.data.remote.AuthApiService
 import com.prizma_distribucija.androiddevelopertask.feature_login.data.repository.LoginRepositoryImpl
 import com.prizma_distribucija.androiddevelopertask.feature_login.data.repository.SignUpRepositoryImpl
@@ -77,4 +82,27 @@ object AppModule {
         authApiService: AuthApiService,
         dispatcherProvider: DispatcherProvider
     ): LoginRepository = LoginRepositoryImpl(authApiService, dispatcherProvider)
+
+    @Provides
+    @Singleton
+    fun providePlanMapper() = PlanMapper()
+
+    @Provides
+    @Singleton
+    fun provideAthletesMapper() = AthleteMapper()
+
+    @Provides
+    @Singleton
+    fun provideUserMapper(
+        planMapper: PlanMapper,
+        athleteMapper: AthleteMapper
+    ) = UserMapper(athleteMapper, planMapper)
+
+    @Provides
+    @Singleton
+    fun provideProfileRepository(
+        feedApiService: FeedApiService,
+        dispatcherProvider: DispatcherProvider,
+        userMapper: UserMapper
+    ): ProfileRepository = ProfileRepositoryImpl(dispatcherProvider, feedApiService, userMapper)
 }

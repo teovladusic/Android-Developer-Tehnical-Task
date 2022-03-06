@@ -5,7 +5,11 @@ import com.prizma_distribucija.androiddevelopertask.core.util.AndroidTestDispatc
 import com.prizma_distribucija.androiddevelopertask.core.util.DispatcherProvider
 import com.prizma_distribucija.androiddevelopertask.fakes.DataStoreManagerFakeImpl
 import com.prizma_distribucija.androiddevelopertask.fakes.LoginRepositoryFakeImpl
+import com.prizma_distribucija.androiddevelopertask.fakes.ProfileRepositoryFakeImpl
 import com.prizma_distribucija.androiddevelopertask.fakes.SignUpRepositoryFakeImpl
+import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.FeedApiService
+import com.prizma_distribucija.androiddevelopertask.feature_feed.data.repository.ProfileRepositoryImpl
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.ProfileRepository
 import com.prizma_distribucija.androiddevelopertask.feature_login.domain.*
 import com.prizma_distribucija.androiddevelopertask.feature_login.domain.use_cases.LoginUserUseCase
 import com.prizma_distribucija.androiddevelopertask.feature_login.domain.use_cases.RegisterUserUseCase
@@ -58,5 +62,10 @@ object TestAppModule {
     @Singleton
     fun provideLoginUserUseCase(loginRepository: LoginRepository) =
         LoginUserUseCase(loginRepository)
+
+    @Provides
+    @Singleton
+    fun provideProfileRepository(): ProfileRepository
+        = ProfileRepositoryFakeImpl()
 
 }

@@ -47,7 +47,7 @@ class SignUpFragmentTests {
             closeSoftKeyboard()
         )
 
-        onView(withId(R.id.btn_sign_up)).perform(ViewActions.click())
+        onView(withId(R.id.btn_sign_up)).perform(click())
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
             .check(matches(ViewMatchers.withText("Please fill out all fields.")))

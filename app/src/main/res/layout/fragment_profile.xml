@@ -6,7 +6,172 @@
     android:layout_height="match_parent"
     tools:context=".feature_feed.presentation.profile.ProfileFragment">
 
-    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_stats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-30dp"
+        android:background="@drawable/profile_stats_background"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@id/constraint_layout">
+
+        <TextView
+            android:id="@+id/tv_views_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_video_plays_count"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1,5 mil" />
+
+        <TextView
+            android:id="@+id/tv_views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Views"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_views_count"
+            app:layout_constraintStart_toStartOf="@id/tv_views_count"
+            app:layout_constraintTop_toBottomOf="@id/tv_views_count" />
+
+        <TextView
+            android:id="@+id/tv_video_plays_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_plan_name"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_views_count"
+            app:layout_constraintTop_toTopOf="@+id/tv_views_count"
+            tools:text="1,410" />
+
+        <TextView
+            android:id="@+id/tv_video_plays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Video plays"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_video_plays_count"
+            app:layout_constraintStart_toStartOf="@id/tv_video_plays_count"
+            app:layout_constraintTop_toBottomOf="@id/tv_video_plays_count" />
+
+        <TextView
+            android:id="@+id/tv_plan_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_video_plays_count"
+            app:layout_constraintTop_toTopOf="@+id/tv_video_plays_count"
+            tools:text="Basic" />
+
+        <TextView
+            android:id="@+id/tv_plan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Plan"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_plan_name"
+            app:layout_constraintStart_toStartOf="@id/tv_plan_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_plan_name" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/profile_background"
+        android:paddingBottom="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:textColor="@color/white"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Teo Vladusic" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:elevation="8dp"
+            app:cardBackgroundColor="#3563DC"
+            app:cardCornerRadius="250dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_name">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="250dp">
+
+                <ImageView
+                    android:id="@+id/img_view_user_picture"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_athletes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:text="Athletes"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraint_layout_stats" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_view_athletes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_athletes" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_get_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

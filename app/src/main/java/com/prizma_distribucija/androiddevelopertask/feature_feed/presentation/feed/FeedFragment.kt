@@ -45,7 +45,7 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.isAuthenticated.collectLatest { isAuthenticated ->
                     if (isAuthenticated) {
-                        //userNotLoggedInDialog.dismiss()
+                        userNotLoggedInDialog.dismiss()
                     } else {
                         onUserNotAuthenticated()
                     }
