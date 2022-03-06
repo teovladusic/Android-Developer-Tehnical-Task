@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view_athlete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            tools:srcCompat="@drawable/ic_google" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tv_athlete_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/card_view_athlete"
+        app:layout_constraintStart_toStartOf="@id/card_view_athlete"
+        app:layout_constraintEnd_toEndOf="@id/card_view_athlete"
+        tools:text="Kill Bill"
+        android:textColor="@color/black"
+        android:layout_marginTop="7dp"
+        android:textSize="17sp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,4 +20,18 @@
         android:name="com.prizma_distribucija.androiddevelopertask.feature_feed.presentation.create_post.CreatePostFragment"
         android:label="fragment_create_post"
         tools:layout="@layout/fragment_create_post" /><action android:id="@+id/action_global_createPostFragment" app:destination="@id/createPostFragment"/>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.prizma_distribucija.androiddevelopertask.feature_login.presentation.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.prizma_distribucija.androiddevelopertask.feature_login.presentation.sign_up.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" /><action android:id="@+id/action_global_loginFragment" app:destination="@id/loginFragment"/><action android:id="@+id/action_global_feedFragment" app:destination="@id/feedFragment"/>
 </navigation>

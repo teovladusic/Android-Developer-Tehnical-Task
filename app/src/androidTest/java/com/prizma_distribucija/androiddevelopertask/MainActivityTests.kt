@@ -25,7 +25,4 @@ class MainActivityTests {
     }
 
     //don't know how to test bottom menu navigation
-
-
-
 }
