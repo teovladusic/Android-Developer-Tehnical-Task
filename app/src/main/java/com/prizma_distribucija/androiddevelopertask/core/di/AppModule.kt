@@ -5,11 +5,15 @@ import com.prizma_distribucija.androiddevelopertask.core.util.Constants
 import com.prizma_distribucija.androiddevelopertask.core.util.DefaultDispatchers
 import com.prizma_distribucija.androiddevelopertask.core.util.DispatcherProvider
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.FeedApiService
+import com.prizma_distribucija.androiddevelopertask.feature_feed.data.repository.CreatePostRepositoryImpl
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.repository.ProfileRepositoryImpl
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.CreatePostRepository
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.ProfileRepository
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.AthleteMapper
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.PlanMapper
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.PostMapper
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.UserMapper
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.use_cases.CreatePostUseCase
 import com.prizma_distribucija.androiddevelopertask.feature_login.data.remote.AuthApiService
 import com.prizma_distribucija.androiddevelopertask.feature_login.data.repository.LoginRepositoryImpl
 import com.prizma_distribucija.androiddevelopertask.feature_login.data.repository.SignUpRepositoryImpl
@@ -105,4 +109,23 @@ object AppModule {
         dispatcherProvider: DispatcherProvider,
         userMapper: UserMapper
     ): ProfileRepository = ProfileRepositoryImpl(dispatcherProvider, feedApiService, userMapper)
+
+    @Provides
+    @Singleton
+    fun provideCreatePostRepository(
+        dispatcherProvider: DispatcherProvider,
+        feedApiService: FeedApiService,
+        postMapper: PostMapper
+    ): CreatePostRepository =
+        CreatePostRepositoryImpl(dispatcherProvider, feedApiService, postMapper)
+
+    @Provides
+    @Singleton
+    fun provideCreatePostUseCase(createPostRepository: CreatePostRepository) =
+        CreatePostUseCase(createPostRepository)
+
+    @Provides
+    @Singleton
+    fun providePostMapper() = PostMapper()
+
 }

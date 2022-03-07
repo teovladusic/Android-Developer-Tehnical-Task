@@ -2,11 +2,13 @@ package com.prizma_distribucija.androiddevelopertask
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.prizma_distribucija.androiddevelopertask.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,19 +34,22 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(navController)
 
         binding.fab.setOnClickListener {
+            if (navController.currentDestination?.id == R.id.createPostFragment) {
+                return@setOnClickListener
+            }
             navHostFragment.navController.navigate(R.id.action_global_createPostFragment)
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment, R.id.signUpFragment -> {
-                    binding.bottomAppBar.visibility = View.GONE
-                    binding.fab.visibility = View.GONE
+                R.id.loginFragment, R.id.signUpFragment, R.id.createPostFragment -> {
+                    binding.bottomAppBar.visibility = View.INVISIBLE
+                    binding.fab.visibility = View.INVISIBLE
                 }
 
                 else -> {
-                    binding.bottomAppBar.visibility = View.VISIBLE
                     binding.fab.visibility = View.VISIBLE
+                    binding.bottomAppBar.visibility = View.VISIBLE
                 }
             }
         }
