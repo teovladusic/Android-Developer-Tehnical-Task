@@ -6,11 +6,15 @@ import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.prizma_distribucija.androiddevelopertask.R
 import com.prizma_distribucija.androiddevelopertask.di.launchFragmentInHiltContainer
 import com.prizma_distribucija.androiddevelopertask.fakes.DataStoreManagerFakeImpl
+import com.prizma_distribucija.androiddevelopertask.fakes.PermissionManagerFakeImpl
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -116,5 +120,27 @@ class CreatePostFragmentTests {
         Espresso.onView(ViewMatchers.withText("Login")).perform(ViewActions.click())
 
         assert(dialog.isShowing == false)
+    }
+
+    @Test
+    fun onCreate_shouldRequestPermissions() {
+        assert(PermissionManagerFakeImpl.havePermissionsBeenRequested == false)
+        launchFragmentInHiltContainer<CreatePostFragment> {  }
+        assert(PermissionManagerFakeImpl.havePermissionsBeenRequested == true)
+    }
+
+    @Test
+    fun onCameraClick_shouldRequestPermissions() = runTest {
+        DataStoreManagerFakeImpl.dataStoreAuthToken.emit("token")
+        assert(PermissionManagerFakeImpl.havePermissionsBeenRequested == false)
+        launchFragmentInHiltContainer<CreatePostFragment> {  }
+        assert(PermissionManagerFakeImpl.havePermissionsBeenRequested == true)
+        PermissionManagerFakeImpl.havePermissionsBeenRequested = false
+
+        PermissionManagerFakeImpl.hasPermissions = false
+
+        onView(withId(R.id.fab_take_picture)).perform(click())
+
+        assert(PermissionManagerFakeImpl.havePermissionsBeenRequested == true)
     }
 }

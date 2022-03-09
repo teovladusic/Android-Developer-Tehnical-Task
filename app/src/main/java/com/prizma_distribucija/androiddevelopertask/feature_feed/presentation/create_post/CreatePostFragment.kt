@@ -17,20 +17,21 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.prizma_distribucija.androiddevelopertask.R
 import com.prizma_distribucija.androiddevelopertask.core.Resource
 import com.prizma_distribucija.androiddevelopertask.databinding.FragmentCreatePostBinding
 import com.prizma_distribucija.androiddevelopertask.databinding.UserNotLoggedInDialogBinding
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.PermissionManager
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.PermissionManagerImpl
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
@@ -46,6 +47,9 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
     private var _userNotLoggedInBinding: UserNotLoggedInDialogBinding? = null
     private val userNotLoggedInBinding get() = _userNotLoggedInBinding!!
 
+    @Inject
+    lateinit var permissionManagerImpl: PermissionManager
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var userNotLoggedInDialog: AlertDialog
 
@@ -54,6 +58,8 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
         _binding = FragmentCreatePostBinding.bind(view)
         _userNotLoggedInBinding = UserNotLoggedInDialogBinding.inflate(layoutInflater)
         viewModel
+
+        permissionManagerImpl.requestPermissionsIfNeeded(requireActivity())
 
         createUserNotLoggedInDialog()
 
@@ -66,6 +72,10 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
         }, ContextCompat.getMainExecutor(requireContext()))
 
         binding.fabTakePicture.setOnClickListener {
+            if (permissionManagerImpl.hasPermissions(requireActivity()) == false) {
+                permissionManagerImpl.requestPermissionsIfNeeded(requireActivity())
+                return@setOnClickListener
+            }
             onCameraClick()
         }
 
@@ -167,7 +177,6 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
         imageCapture.takePicture(cameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
             override fun onError(exception: ImageCaptureException) {
                 super.onError(exception)
-
             }
 
             override fun onCaptureSuccess(image: ImageProxy) {

@@ -8,9 +8,7 @@ import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.Fee
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.repository.CreatePostRepositoryImpl
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.repository.FeedRepositoryImpl
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.repository.ProfileRepositoryImpl
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.CreatePostRepository
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.FeedRepository
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.ProfileRepository
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.*
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper.*
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.use_cases.CreatePostUseCase
 import com.prizma_distribucija.androiddevelopertask.feature_login.data.remote.AuthApiService
@@ -148,5 +146,9 @@ object AppModule {
         feedMapper: FeedMapper
     ): FeedRepository =
         FeedRepositoryImpl(feedApiService, dispatcherProvider, feedMapper)
+
+    @Provides
+    @Singleton
+    fun providePermissionManager() : PermissionManager = PermissionManagerImpl()
 
 }

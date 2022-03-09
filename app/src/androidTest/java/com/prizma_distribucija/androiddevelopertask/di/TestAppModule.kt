@@ -6,6 +6,7 @@ import com.prizma_distribucija.androiddevelopertask.core.util.DispatcherProvider
 import com.prizma_distribucija.androiddevelopertask.fakes.*
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.CreatePostRepository
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.FeedRepository
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.PermissionManager
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.ProfileRepository
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper.AuthorMapper
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper.FeedMapper
@@ -96,5 +97,9 @@ object TestAppModule {
     @Provides
     @Singleton
     fun provideGetFeedUseCase(feedRepository: FeedRepository) = GetFeedUseCase(feedRepository)
+
+    @Provides
+    @Singleton
+    fun providePermissionManager(): PermissionManager = PermissionManagerFakeImpl()
 
 }
