@@ -17,10 +17,11 @@ Dagger Hilt, Kotlin Coroutines, LiveData, Flow, Retrofit2, DataStore Preferences
 Views should only be responsible for interaction with users and displaying UI.
 
 
-ViewModel is the “brain” of the application and its purpose is to deal with business logic. In this application I also addedUse Cases for even better decoupling and reusability of the application. Technically it is not wrong to leave Use Cases out, but I think it’s a good practice to write them as you can inject them everywhere where you might need that Use Case which also results in not repeating yourself.
+ViewModel is the “brain” of the application and its purpose is to deal with business logic. In this application I also added Use Cases for even better decoupling and reusability of the application. Technically it is not wrong to leave Use Cases out, but I think it’s a good practice to write them as you can inject them everywhere where you might need that Use Case which also results in not repeating yourself.
 
 
 Data repositories are representing the data layer of the application. They should be responsible only for communicating with Use Cases (or ViewModel) and provide them with the requested data. In this application I used api as the source of data with Retrofit2 which requests an additional service defining all the routes and http methods. Data layer in this application has its own models (dtos) which are representations of data received from api. In this case the repository also has the responsibility to map those dtos into the domain objects.
+
 
 ## Design
 Design of the application is inspired from these resources:
