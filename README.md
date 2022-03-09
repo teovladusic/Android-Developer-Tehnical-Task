@@ -30,3 +30,7 @@ Profile screen - https://dribbble.com/shots/6310443-Movie-App/attachments/631044
 
 ## Data Source:
 https://technicaltaskapi.docs.apiary.io/#
+
+## Application
+
+![AndroidDeveloperTaskMockup](https://user-images.githubusercontent.com/71450900/157509463-34148ee6-3ac5-448d-9640-8c580bca7036.jpg)
