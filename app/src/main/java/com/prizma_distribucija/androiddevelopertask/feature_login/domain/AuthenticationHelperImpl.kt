@@ -11,7 +11,7 @@ class AuthenticationHelperImpl @Inject constructor(
     dispatcherProvider: DispatcherProvider
 ) : AuthenticationHelper {
 
-    private val _isAuthenticated = MutableStateFlow(false)
+    private val _isAuthenticated = MutableStateFlow(true)
 
     override val isAuthenticated: StateFlow<Boolean>
         get() = _isAuthenticated.asStateFlow()

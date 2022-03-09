@@ -6,6 +6,8 @@ import android.graphics.ImageFormat
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
@@ -14,11 +16,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.prizma_distribucija.androiddevelopertask.R
 import com.prizma_distribucija.androiddevelopertask.core.Resource
 import com.prizma_distribucija.androiddevelopertask.databinding.FragmentCreatePostBinding
+import com.prizma_distribucija.androiddevelopertask.databinding.UserNotLoggedInDialogBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,10 +43,19 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
     private lateinit var imageCapture: ImageCapture
     private lateinit var cameraExecutor: ExecutorService
 
+    private var _userNotLoggedInBinding: UserNotLoggedInDialogBinding? = null
+    private val userNotLoggedInBinding get() = _userNotLoggedInBinding!!
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var userNotLoggedInDialog: AlertDialog
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCreatePostBinding.bind(view)
+        _userNotLoggedInBinding = UserNotLoggedInDialogBinding.inflate(layoutInflater)
         viewModel
+
+        createUserNotLoggedInDialog()
 
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -54,6 +67,10 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
 
         binding.fabTakePicture.setOnClickListener {
             onCameraClick()
+        }
+
+        userNotLoggedInBinding.tvLogIn.setOnClickListener {
+            onLoginClicked()
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -78,12 +95,33 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
                             handleCreatePostLoading()
                         }
                         is Resource.Success -> {
-                            handleCreatePostSuccess("Successfully saved")
+                            handleCreatePostSuccess()
                         }
                     }
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isAuthenticated.collectLatest { isAuthenticated ->
+                    if (isAuthenticated) {
+                        userNotLoggedInDialog.dismiss()
+                    } else {
+                        onUserNotAuthenticated()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun onLoginClicked() {
+        userNotLoggedInDialog.dismiss()
+        findNavController().navigate(R.id.action_global_loginFragment)
+    }
+
+    private fun onUserNotAuthenticated() {
+        userNotLoggedInDialog.show()
     }
 
     private fun handleCreatePostLoading() {
@@ -95,9 +133,9 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun handleCreatePostSuccess(message: String) {
+    private fun handleCreatePostSuccess() {
         binding.progressBarCreatePost.visibility = View.GONE
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding.root, "Successfully saved", Snackbar.LENGTH_SHORT).show()
     }
 
     @SuppressLint("UnsafeOptInUsageError")
@@ -109,6 +147,13 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
 
         viewModel.createPost(bitmap, file)
         changeUiOnImageCaptured(bitmap)
+    }
+
+    private fun createUserNotLoggedInDialog() {
+        userNotLoggedInDialog = AlertDialog.Builder(requireContext())
+            .setView(userNotLoggedInBinding.root)
+            .setCancelable(false)
+            .create()
     }
 
     private fun changeUiOnImageCaptured(bitmap: Bitmap) =

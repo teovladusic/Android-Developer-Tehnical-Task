@@ -5,8 +5,7 @@ import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.Fee
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.dto.PostDto
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.CreatePostRepository
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.CreatePostResponse
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.Post
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.PostMapper
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper.PostMapper
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import javax.inject.Inject

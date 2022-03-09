@@ -1,9 +1,9 @@
-package com.prizma_distribucija.androiddevelopertask.feature_feed.domain
+package com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper
 
 import com.google.common.truth.Truth.assertThat
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.dto.PlanDto
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.Plan
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.PlanMapper
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper.PlanMapper
 import org.junit.Before
 import org.junit.Test
 

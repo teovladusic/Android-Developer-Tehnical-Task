@@ -14,6 +14,7 @@ import com.prizma_distribucija.androiddevelopertask.core.util.DispatcherProvider
 import com.prizma_distribucija.androiddevelopertask.core.util.toBitmap
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.Post
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.use_cases.CreatePostUseCase
+import com.prizma_distribucija.androiddevelopertask.feature_login.domain.AuthenticationHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -29,7 +30,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CreatePostViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
-    private val createPostUseCase: CreatePostUseCase
+    private val createPostUseCase: CreatePostUseCase,
+    private val authenticationHelper: AuthenticationHelper
 ) : ViewModel() {
 
     private val createPostEventsChannel = Channel<CreatePostEvents>()
@@ -37,6 +39,8 @@ class CreatePostViewModel @Inject constructor(
 
     private val _createPostStatus = MutableSharedFlow<Resource<Post>>()
     val createPostStatus = _createPostStatus.asSharedFlow()
+
+    val isAuthenticated = authenticationHelper.isAuthenticated
 
     @SuppressLint("UnsafeOptInUsageError")
     fun createPost(bitmap: Bitmap, file: File) = viewModelScope.launch(dispatcherProvider.io) {

@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface AuthenticationHelper {
 
-    val isAuthenticated: SharedFlow<Boolean>
+    val isAuthenticated: StateFlow<Boolean>
 }

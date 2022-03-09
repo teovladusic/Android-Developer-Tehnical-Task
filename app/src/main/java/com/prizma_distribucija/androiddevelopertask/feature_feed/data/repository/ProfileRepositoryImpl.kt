@@ -4,7 +4,7 @@ import com.prizma_distribucija.androiddevelopertask.core.util.DispatcherProvider
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.FeedApiService
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.ProfileRepository
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.GetUserResponse
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.UserMapper
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper.UserMapper
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

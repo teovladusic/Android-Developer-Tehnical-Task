@@ -7,14 +7,11 @@ import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.Fee
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.dto.PostDto
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.CreatePostRepository
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.Post
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.PostMapper
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper.PostMapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
-import okhttp3.RequestBody
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After

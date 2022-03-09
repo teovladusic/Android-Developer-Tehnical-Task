@@ -6,13 +6,12 @@ import com.prizma_distribucija.androiddevelopertask.core.util.DefaultDispatchers
 import com.prizma_distribucija.androiddevelopertask.core.util.DispatcherProvider
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.FeedApiService
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.repository.CreatePostRepositoryImpl
+import com.prizma_distribucija.androiddevelopertask.feature_feed.data.repository.FeedRepositoryImpl
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.repository.ProfileRepositoryImpl
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.CreatePostRepository
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.FeedRepository
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.ProfileRepository
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.AthleteMapper
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.PlanMapper
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.PostMapper
-import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.UserMapper
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper.*
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.use_cases.CreatePostUseCase
 import com.prizma_distribucija.androiddevelopertask.feature_login.data.remote.AuthApiService
 import com.prizma_distribucija.androiddevelopertask.feature_login.data.repository.LoginRepositoryImpl
@@ -127,5 +126,27 @@ object AppModule {
     @Provides
     @Singleton
     fun providePostMapper() = PostMapper()
+
+    @Provides
+    @Singleton
+    fun provideVideoMapper() = VideoMapper()
+
+    @Provides
+    @Singleton
+    fun provideAuthorMapper() = AuthorMapper()
+
+    @Provides
+    @Singleton
+    fun provideFeedMapper(authorMapper: AuthorMapper, videoMapper: VideoMapper) =
+        FeedMapper(authorMapper, videoMapper)
+
+    @Provides
+    @Singleton
+    fun provideFeedRepository(
+        feedApiService: FeedApiService,
+        dispatcherProvider: DispatcherProvider,
+        feedMapper: FeedMapper
+    ): FeedRepository =
+        FeedRepositoryImpl(feedApiService, dispatcherProvider, feedMapper)
 
 }

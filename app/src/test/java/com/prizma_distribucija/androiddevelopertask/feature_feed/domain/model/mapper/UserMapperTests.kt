@@ -1,10 +1,13 @@
-package com.prizma_distribucija.androiddevelopertask.feature_feed.domain
+package com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper
 
 import com.google.common.truth.Truth.assertThat
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.dto.AthleteDto
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.dto.PlanDto
 import com.prizma_distribucija.androiddevelopertask.feature_feed.data.remote.dto.UserResponseDto
 import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.*
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper.AthleteMapper
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper.PlanMapper
+import com.prizma_distribucija.androiddevelopertask.feature_feed.domain.model.mapper.UserMapper
 import org.junit.Before
 import org.junit.Test
 
