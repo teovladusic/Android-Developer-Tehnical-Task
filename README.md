@@ -1,5 +1,5 @@
 # Android-Developer-Tehnical-Task
-Task provided by Async Labs company
+Task provided by Async Labs company for android developer position (resulted in offer)
 
 ## Task
 Create an application that will serve a feed with posts that are based around videos.
